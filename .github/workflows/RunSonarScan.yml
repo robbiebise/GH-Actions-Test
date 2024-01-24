@@ -21,6 +21,10 @@ jobs:
           name: pr
           path: pr/
 
+      # ls contents of pr directory
+      - name: List pr directory
+        run: ls -R pr
+
       - name: Run Sonar Scan
         uses: sonarsource/sonar-scan-action@v1
         env:
