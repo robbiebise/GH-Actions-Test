@@ -22,6 +22,8 @@ app.run()
 def hello_world():
     return 'Hello World'
 
+def hello_world():
+    return 'Hello World'
 # main driver function
 if __name__ == '__main__':
 
