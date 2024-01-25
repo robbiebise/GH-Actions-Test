@@ -20,6 +20,10 @@ jobs:
         run: |
           mkdir -p ./pr
           echo ${{ github.event.number }} > ./pr/NR
+      - name: Save PR branch name
+        run: |
+          mkdir -p ./pr
+          echo ${{ github.event.pull_request.head.ref }} > ./pr/BRANCH
       - uses: actions/upload-artifact@v4
         with:
           name: pr
