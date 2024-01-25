@@ -43,9 +43,9 @@ jobs:
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
         with:
           args: >
-          -Dsonar.pullrequest.key=${{ env.PR_NUMBER }}
-          -Dsonar.pullrequest.branch=${{ github.head_ref }}
-          -Dsonar.pullrequest.base=${{ github.base_ref }}
+              -Dsonar.pullrequest.key=${{ env.PR_NUMBER }}
+              -Dsonar.pullrequest.branch=${{ github.head_ref }}
+              -Dsonar.pullrequest.base=${{ github.base_ref }}
 
   build-main:
     runs-on: ubuntu-latest
