@@ -15,9 +15,6 @@ def welcome():
     return "Welcome to the Flask Web Server!"
 # ‘/hello’ URL is bound with hello_world() function.
 
-@app.route('/hello')
-def hello_world():
-    return 'Hello World'
 
 # create a dynamic route
 @app.route('/blog/<int:postID>')
