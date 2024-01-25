@@ -32,9 +32,10 @@ jobs:
             });
             
 
-            let matchArtifact = allArtifacts.data.artifacts.filter((artifact) => {
-              return artifact.name == "pr"
-            })[0];
+            // Find the artifact with the name "pr"
+            let matchArtifact = allArtifacts.data.artifacts.find((artifact) => {
+              return artifact.name == "pr";
+            });
             let download = await github.rest.actions.downloadArtifact({
                owner: context.repo.owner,
                repo: context.repo.repo,
