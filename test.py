@@ -32,8 +32,6 @@ def open_file():
     file = open('test.txt', 'r')
     return file.read()
 
-def hello_world():
-    return 'Hello World'
 
 def hello_world():
     return 'Hello World'
