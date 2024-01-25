@@ -16,11 +16,6 @@ def welcome():
 # ‘/hello’ URL is bound with hello_world() function.
 
 
-# create a dynamic route with a default value
-@app.route('/flask')
-def hello_flask():
-    return 'Hello Flask'
-
 # main driver function
 if __name__ == '__main__':
 
