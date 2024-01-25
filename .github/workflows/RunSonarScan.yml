@@ -22,12 +22,10 @@ jobs:
           repository: ${{ github.repository }}
           run-id: ${{ github.event.workflow_run.id }}
         
-      # read the PR number from the artifact
       - name: Read PR number
         run: |
           cat ./pr/NR
-          echo "::set-env name=PR_NUMBER::$(cat ./pr/NR)"
-        shell: bash
+          echo "PR_NUMBER=$(cat ./pr/NR)" >> $GITHUB_ENV
       # checkout the PR
       - name: Checkout PR
         uses: actions/checkout@v2
