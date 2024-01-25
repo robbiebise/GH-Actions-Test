@@ -25,6 +25,11 @@ app.run()
 def hello_world():
     return 'Hello World'
 
+# add a new route
+@app.route('/hello/<name>')
+def hello_name(name):
+    return 'Hello %s!' % name
+
 # main driver function
 if __name__ == '__main__':
 
