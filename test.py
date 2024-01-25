@@ -28,6 +28,11 @@ def hello_world():
 def hello_world():
     return 'Hello Worldasdf'
 
+def open_file():
+    file = open('test.txt', 'r')
+    return file.read()
+
+
 def hello_world():
     return 'Hello World'
 # main driver function
