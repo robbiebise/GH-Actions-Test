@@ -13,7 +13,9 @@ app = Flask(__name__)
 # ‘/’ URL is bound with welcome() function.
 def welcome():
     return "Welcome to the Flask Web Server!"
-asdfasdf
+# ‘/hello’ URL is bound with hello_world() function.
+
+@app.route('/hello')
 # main driver function
 if __name__ == '__main__':
 
