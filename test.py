@@ -30,6 +30,10 @@ def hello_world():
 def hello_name(name):
     return 'Hello %s!' % name
 
+@app.route('/hello/<int:age>')
+def hello_age(age):
+    return 'Hello %d!' % age
+
 # main driver function
 if __name__ == '__main__':
 
