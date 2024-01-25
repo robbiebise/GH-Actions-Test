@@ -41,4 +41,14 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+    # else if the workflow run is not a PR, run a normal scan
+    else:
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v2
+        - name: Sonar Scan
+          uses: sonarsource/sonarqube-scan-action@master
+          env:
+            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+            SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
