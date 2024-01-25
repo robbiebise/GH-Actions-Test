@@ -22,6 +22,11 @@ def hello_world():
 @app.route('/hello/<name>')
 def hello_name(name):
     return 'Hello %s!' % name
+
+# create a dynamic route
+@app.route('/blog/<int:postID>')
+def show_blog(postID):
+    return 'Blog Number %d' % postID
 # main driver function
 if __name__ == '__main__':
 
