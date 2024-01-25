@@ -19,10 +19,22 @@ jobs:
       - name: Checkout 
         uses: actions/checkout@v3
 
+      - name: Get triggering workflow run id
+        run: |
+          echo ${{ github.event.workflow_run.id }} > ./run_id
+      - name: Print stuff
+        run: |
+          echo ${{ github.event.workflow_run.id }}
+          echo ${{ github.repository }}
+          echo ${{ secrets.GITHUB_TOKEN }}
+          echo ${{ github.event.workflow_run.artifacts_url }}
+          // print run id
+          echo ${{ github.event.workflow_run.id }}
       - name: Downlod Artifacts 
         uses: actions/download-artifact@v4
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
         
       - name: Unzip PR artifact
         run: unzip pr.zip
