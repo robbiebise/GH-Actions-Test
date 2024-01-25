@@ -45,13 +45,13 @@ jobs:
             console.log(context.repo.owner);
             console.log("Repo:");
             console.log(context.repo.repo);
-            let download = await github.rest.actions.downloadArtifact({
-               owner: context.repo.owner,
-               repo: context.repo.repo,
-               artifact_id: matchArtifact.id
-            });
-            let fs = require('fs');
-            fs.writeFileSync(`${process.env.GITHUB_WORKSPACE}/pr`, Buffer.from(download.data));
+            // download the artifact
+            await github.rest.actions.downloadArtifact({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              artifact_id: matchArtifact.id,
+              archive_format: "zip",
+              });
       - run: unzip pr.zip
 
       - name: checkout
