@@ -10,6 +10,7 @@ app = Flask(__name__)
 # which tells the application which URL should call
 # the associated function.
 @app.route('/')
+@app.route('/asdf')
 # ‘/’ URL is bound with welcome() function.
 def welcome():
     return "Welcome to the Flask Web Server!"
