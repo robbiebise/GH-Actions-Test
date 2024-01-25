@@ -25,11 +25,6 @@ app.run()
 def hello_world():
     return 'Hello World'
 
-
-def open_file():
-    file = open('test.txt', 'r')
-    return file.read()
-
 # main driver function
 if __name__ == '__main__':
 
