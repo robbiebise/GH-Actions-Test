@@ -27,6 +27,11 @@ def hello_name(name):
 @app.route('/blog/<int:postID>')
 def show_blog(postID):
     return 'Blog Number %d' % postID
+
+# create a dynamic route with a default value
+@app.route('/rev/<float:revNo>')
+def revision(revNo):
+    return 'Revision Number %f' % revNo
 # main driver function
 if __name__ == '__main__':
 
