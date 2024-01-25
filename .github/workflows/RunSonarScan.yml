@@ -21,6 +21,8 @@ jobs:
 
       - name: Downlod Artifacts 
         uses: actions/download-artifact@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
         
       - name: Unzip PR artifact
         run: unzip pr.zip
