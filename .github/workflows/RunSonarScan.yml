@@ -15,10 +15,6 @@ jobs:
       github.event.workflow_run.event == 'pull_request' &&
       github.event.workflow_run.conclusion == 'success'
     steps:
-      # download the PR artifact
-      - name: Checkout 
-        uses: actions/checkout@v3
-
       - name: Downlod Artifacts 
         uses: actions/download-artifact@v4
         with:
@@ -26,8 +22,18 @@ jobs:
           repository: ${{ github.repository }}
           run-id: ${{ github.event.workflow_run.id }}
         
-      - name: Unzip PR artifact
-        run: unzip pr.zip
+      # read the PR number from the artifact
+      - name: Read PR number
+        run: |
+          cat ./pr/NR
+          echo "::set-env name=PR_NUMBER::$(cat ./pr/NR)"
+        shell: bash
+      # checkout the PR
+      - name: Checkout PR
+        uses: actions/checkout@v2
+        with:
+          ref: refs/pull/${{ env.PR_NUMBER }}/merge
+          fetch-depth: 0
       # run sonar scan
       - name: Sonar Scan
         uses: sonarsource/sonarqube-scan-action@master
