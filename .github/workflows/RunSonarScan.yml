@@ -7,7 +7,8 @@ on:
     workflows: ["Receive PR"]
     types:
       - completed
-
+#ensure job isn't started until the Receive PR workflow has completed
+needs: Receive PR
 jobs:
   build:
     runs-on: ubuntu-latest
