@@ -10,9 +10,29 @@ app = Flask(__name__)
 # which tells the application which URL should call
 # the associated function.
 @app.route('/')
+@app.route('/asdf')
 # ‘/’ URL is bound with welcome() function.
 def welcome():
     return "Welcome to the Flask Web Server!"
+
+def hello_world():
+    return 'Hello World'
+# ‘/hello’ URL is bound with hello_world() function.
+# call the function
+app.run()
+# add a new route
+@app.route('/hello')
+def hello_world():
+    return 'Hello World'
+
+# add a new route
+@app.route('/hello/<name>')
+def hello_name(name):
+    return 'Hello %s!' % name
+
+@app.route('/hello/<int:age>')
+def hello_age(age):
+    return 'Hello %d!' % age
 
 # main driver function
 if __name__ == '__main__':
