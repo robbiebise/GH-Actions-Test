@@ -62,11 +62,8 @@ jobs:
 
       # Download the artifact
 
-      - name: Download PR artifact
+      - name: Download PR artifacts
         uses: actions/download-artifact@v4
-        with:
-          name: pr
-          path: pr/
 
       # list everyting in the directory
       - name: List directory
