@@ -25,8 +25,6 @@ app.run()
 def hello_world():
     return 'Hello World'
 
-def hello_world():
-    return 'Hello Worldasdf'
 
 def open_file():
     file = open('test.txt', 'r')
