@@ -60,10 +60,13 @@ jobs:
           -H "Accept: application/vnd.github.v3+json" \
           https://api.github.com/repos/${{ github.repository }}/actions/runs/${{ github.event.workflow_run.id }}/artifacts
 
-      # Download the artifact
-
-      - name: Download PR artifacts
-        uses: actions/download-artifact@v4
+      # Download all artifacts with v2
+      - name: Download all artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: pr
+          path: pr.zip
+      
 
       # list everyting in the directory
       - name: List directory
