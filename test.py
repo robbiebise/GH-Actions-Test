@@ -15,6 +15,9 @@ app = Flask(__name__)
 def welcome():
     return "Welcome to the Flask Web Server!"
 
+')
+def hello_world():
+    return 'Hello World'
 # ‘/hello’ URL is bound with hello_world() function.
 # call the function
 app.run()
