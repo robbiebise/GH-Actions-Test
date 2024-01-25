@@ -16,6 +16,8 @@ def welcome():
 # ‘/hello’ URL is bound with hello_world() function.
 
 @app.route('/hello')
+def hello_world():
+    return 'Hello World'
 # main driver function
 if __name__ == '__main__':
 
