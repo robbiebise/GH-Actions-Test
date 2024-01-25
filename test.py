@@ -16,11 +16,6 @@ def welcome():
 # ‘/hello’ URL is bound with hello_world() function.
 
 
-# create a dynamic route
-@app.route('/blog/<int:postID>')
-def show_blog(postID):
-    return 'Blog Number %d' % postID
-
 # create a dynamic route with a default value
 @app.route('/rev/<float:revNo>')
 def revision(revNo):
