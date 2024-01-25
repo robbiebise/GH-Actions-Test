@@ -24,6 +24,9 @@ def hello_world():
 
 def hello_world():
     return 'Hello Worldasdf'
+
+def hello_world():
+    return 'Hello World'
 # main driver function
 if __name__ == '__main__':
 
