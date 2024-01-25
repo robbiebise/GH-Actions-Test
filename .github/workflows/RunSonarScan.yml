@@ -52,6 +52,9 @@ jobs:
               artifact_id: matchArtifact.id,
               archive_format: "zip",
               });
+      # list everyting in the directory
+      - name: List directory
+        run: ls -R
       - run: unzip pr.zip
 
       - name: checkout
