@@ -1,6 +1,7 @@
 # Importing flask module in the project is mandatory
 # An object of Flask class is our WSGI application.
-from flask import Flask
+from flask import Flask, request
+import sqlite3
 
 # Flask constructor takes the name of
 # current module (__name__) as argument.
@@ -20,3 +21,20 @@ if __name__ == '__main__':
     # run() method of Flask class runs the application
     # on the local development server.
     app.run()
+
+    @app.route('/login', methods=['POST'])
+    def login():
+        username = request.form['username']
+        password = request.form['password']
+        
+        # Insecure: Directly concatenating user input into SQL query
+        # Vulnerable to SQL injection attacks
+        conn = sqlite3.connect('database.db')
+        cursor = conn.cursor()
+        query = "SELECT * FROM users WHERE username = '" + username + "' AND password = '" + password + "'"
+        cursor.execute(query)
+        result = cursor.fetchone()
+        
+        # Rest of the login logic
+        ...
+
