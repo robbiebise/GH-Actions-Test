@@ -35,6 +35,11 @@ jobs:
         with:
           ref: refs/pull/${{ env.PR_NUMBER }}/merge
           fetch-depth: 0
+      # dump github context
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
       # print pull request data for sonar
       - name: Print PR data
         run: |
