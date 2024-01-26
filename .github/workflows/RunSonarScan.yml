@@ -44,8 +44,8 @@ jobs:
       - name: Find PR in GitHub context
         id: find_pr
         run: |
-          echo "{pr_head_ref}={$(echo $GITHUB_CONTEXT | jq '.event.pull_request.head.ref')}" >> $GITHUB_OUTPUT
-          echo "{pr_base_ref}={$(echo $GITHUB_CONTEXT | jq '.event.pull_request.base.ref')}" >> $GITHUB_OUTPUT
+          echo $GITHUB_CONTEXT | jq '.event.pull_request.head.ref'
+          echo $GITHUB_CONTEXT | jq '.event.pull_request.base.ref'
 
       - name: output PR info
         run: |
@@ -68,18 +68,18 @@ jobs:
             -Dsonar.pullrequest.base=${{ env.pr_base_ref }}
 
 
-  build-main:
-    runs-on: ubuntu-latest
-    # if the workflow run is not a PR, run a normal scan
-    if: >
-      github.event_name == 'push' &&
-      github.event.workflow_run.event != 'pull_request'
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Sonar Scan
-        uses: sonarsource/sonarqube-scan-action@master
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+  # build-main:
+  #   runs-on: ubuntu-latest
+  #   # if the workflow run is not a PR, run a normal scan
+  #   if: >
+  #     github.event_name == 'push' &&
+  #     github.event.workflow_run.event != 'pull_request'
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v2
+  #     - name: Sonar Scan
+  #       uses: sonarsource/sonarqube-scan-action@master
+  #       env:
+  #         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  #         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
