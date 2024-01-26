@@ -40,19 +40,22 @@ jobs:
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "$GITHUB_CONTEXT"
-      # find pull request in github context and save head ref and base ref in env
-      - name: Find PR in GitHub context
-        id: find_pr
-        run: |
-          echo $GITHUB_CONTEXT | jq '.event.pull_request.head.ref'
-          echo $GITHUB_CONTEXT | jq '.event.pull_request.base.ref'
 
-      - name: output PR info
+      # find the pull request for the env.PR_NUMBER in the github context and print the head and base refs
+      - name: save PR data
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
         run: |
-          cat $GITHUB_OUTPUT
-          echo ${{ env.pr_head_ref }}
-          echo ${{ env.pr_base_ref }}
+          echo "pr_head_ref=$(echo $GITHUB_CONTEXT | jq -r '.event.pull_request.head.ref')" >> $GITHUB_ENV
+          echo "pr_base_ref=$(echo $GITHUB_CONTEXT | jq -r '.event.pull_request.base.ref')" >> $GITHUB_ENV
 
+
+      # ensure the PR data was saved in the env by printing it
+      - name: print PR data
+        run: |
+          echo "PR_NUMBER=${{ env.PR_NUMBER }}"
+          echo "pr_head_ref=${{ env.pr_head_ref }}"
+          echo "pr_base_ref=${{ env.pr_base_ref }}"
 
 
       # run sonar scan put PR info into sonar properties using with args
