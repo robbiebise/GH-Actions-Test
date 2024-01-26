@@ -35,6 +35,12 @@ jobs:
         with:
           ref: refs/pull/${{ env.PR_NUMBER }}/merge
           fetch-depth: 0
+      # print pull request data for sonar
+      - name: Print PR data
+        run: |
+          echo "PR_NUMBER=${{ env.PR_NUMBER }}"
+          echo "PR_BRANCH=${{ github.head_ref }}"
+          echo "PR_BASE=${{ github.base_ref }}"
       # run sonar scan
       - name: Sonar Scan
         uses: sonarsource/sonarqube-scan-action@master
