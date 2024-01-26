@@ -44,9 +44,15 @@ jobs:
       - name: Find PR in GitHub context
         id: find_pr
         run: |
-          echo "::set-output name=pr_number::$(echo $GITHUB_CONTEXT | jq '.event.pull_request.number')"
-          echo "::set-output name=pr_head_ref::$(echo $GITHUB_CONTEXT | jq '.event.pull_request.head.ref')"
-          echo "::set-output name=pr_base_ref::$(echo $GITHUB_CONTEXT | jq '.event.pull_request.base.ref')"
+          echo "{pr_head_ref}={$(echo $GITHUB_CONTEXT | jq '.event.pull_request.head.ref')}" >> $GITHUB_OUTPUT
+          echo "{pr_base_ref}={$(echo $GITHUB_CONTEXT | jq '.event.pull_request.base.ref')}" >> $GITHUB_OUTPUT
+
+      - name: output PR info
+        run: |
+          cat $GITHUB_OUTPUT
+          echo env.pr_head_ref
+          echo env.pr_base_ref
+
 
 
       # run sonar scan put PR info into sonar properties using with args
