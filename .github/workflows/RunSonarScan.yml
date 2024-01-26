@@ -39,8 +39,8 @@ jobs:
       - name: Print PR data
         run: |
           echo "PR_NUMBER=${{ env.PR_NUMBER }}"
-          echo "PR_BRANCH=${{ github.head_ref }}"
-          echo "PR_BASE=${{ github.base_ref }}"
+          echo "PR_BRANCH=${{ github.event.pull_request.head.ref }}"
+          echo "PR_BASE=${{ github.event.pull_request.base.ref }}"
       # run sonar scan
       - name: Sonar Scan
         uses: sonarsource/sonarqube-scan-action@master
