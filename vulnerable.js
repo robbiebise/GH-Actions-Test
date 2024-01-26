@@ -32,6 +32,7 @@ fetch(transferUrl, { method: 'POST' });
 // Vulnerability 6: Insecure Deserialization
 const serializedData = 'eyJpZCI6MTIzLCJ1c2VybmFtZSI6ImFkbWluIn0=';
 const userData = deserialize(serializedData);
+const userasdfData = deserialize(serializedData);
 
 // Vulnerability 7: Components with Known Vulnerabilities
 const express = require('express');
