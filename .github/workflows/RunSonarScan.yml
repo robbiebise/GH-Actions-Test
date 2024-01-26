@@ -40,13 +40,16 @@ jobs:
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "$GITHUB_CONTEXT"
-      # print pull request data for sonar
-      - name: Print PR data
+      # find pull request in github context and save head ref and base ref in env
+      - name: Find PR in GitHub context
+        id: find_pr
         run: |
-          echo "PR_NUMBER=${{ env.PR_NUMBER }}"
-          echo "PR_BRANCH=${{ github.event.pull_request.head.ref }}"
-          echo "PR_BASE=${{ github.event.pull_request.base.ref }}"
-      # run sonar scan
+          echo "::set-output name=pr_number::$(echo $GITHUB_CONTEXT | jq '.event.pull_request.number')"
+          echo "::set-output name=pr_head_ref::$(echo $GITHUB_CONTEXT | jq '.event.pull_request.head.ref')"
+          echo "::set-output name=pr_base_ref::$(echo $GITHUB_CONTEXT | jq '.event.pull_request.base.ref')"
+
+
+      # run sonar scan put PR info into sonar properties using with args
       - name: Sonar Scan
         uses: sonarsource/sonarqube-scan-action@master
         env:
@@ -54,9 +57,10 @@ jobs:
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
         with:
           args: >
-              -Dsonar.pullrequest.key=${{ env.PR_NUMBER }}
-              -Dsonar.pullrequest.branch=${{ github.head_ref }}
-              -Dsonar.pullrequest.base=${{ github.base_ref }}
+            -Dsonar.pullrequest.key=${{ env.PR_NUMBER }}
+            -Dsonar.pullrequest.branch=${{ env.pr_head_ref }}
+            -Dsonar.pullrequest.base=${{ env.pr_base_ref }}
+
 
   build-main:
     runs-on: ubuntu-latest
