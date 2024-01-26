@@ -50,8 +50,8 @@ jobs:
       - name: output PR info
         run: |
           cat $GITHUB_OUTPUT
-          echo env.pr_head_ref
-          echo env.pr_base_ref
+          echo ${{ env.pr_head_ref }}
+          echo ${{ env.pr_base_ref }}
 
 
 
