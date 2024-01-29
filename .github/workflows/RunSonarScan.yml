@@ -43,8 +43,8 @@ jobs:
           GITHUB_CONTEXT: ${{ toJson(github) }}
           PR_NUMBER: ${{ env.PR_NUMBER }}
         run: |
-          echo "pr_head_ref=$(echo $GITHUB_CONTEXT | jq -r --arg PR_NUMBER "$PR_NUMBER" '.event.pull_requests[] | select(.number == ($PR_NUMBER | tonumber)) | .head.ref')" >> $GITHUB_ENV
-          echo "pr_base_ref=$(echo $GITHUB_CONTEXT | jq -r --arg PR_NUMBER "$PR_NUMBER" '.event.pull_requests[] | select(.number == ($PR_NUMBER | tonumber)) | .base.ref')" >> $GITHUB_ENV
+          echo "pr_head_ref=$(echo $GITHUB_CONTEXT | jq -r --arg PR_NUMBER "$PR_NUMBER" '.event.workflow_run.pull_requests[] | select(.number == ($PR_NUMBER | tonumber)) | .head.ref')" >> $GITHUB_ENV
+          echo "pr_base_ref=$(echo $GITHUB_CONTEXT | jq -r --arg PR_NUMBER "$PR_NUMBER" '.event.workflow_run.pull_requests[] | select(.number == ($PR_NUMBER | tonumber)) | .base.ref')" >> $GITHUB_ENV
 
 
       # ensure the PR data was saved in the env by printing it
