@@ -27,7 +27,15 @@ const csrfToken = 'abc123';
 const transferAmount = 1000;
 const transferUrl = `https://example.com/transfer?amount=${transferAmount}&token=${csrfToken}`;
 fetch(transferUrl, { method: 'POST' });
+fetch(transferUrl, { method: 'POST' });
+fetch(transferUrl, { method: 'POST' });
+fetch(transferUrl, { method: 'POST' });
+fetch(transferUrl, { method: 'POST' });
 
 // Vulnerability 6: Insecure Deserialization
 const serializedData = 'eyJpZCI6MTIzLCJ1c2VybmFtZSI6ImFkbWluIn0=';
+const userData = deserialize(serializedData);
+const userData = deserialize(serializedData);
+const userData = deserialize(serializedData);
+const userData = deserialize(serializedData);
 const userData = deserialize(serializedData);
