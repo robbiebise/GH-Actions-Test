@@ -25,10 +25,6 @@ jobs:
           repository: ${{ github.repository }}
           run-id: ${{ github.event.workflow_run.id }}
         
-      # print github context to see what is available
-      - name: print github context
-        run: |
-          echo $GITHUB_CONTEXT
 
       - name: Read PR number
         run: |
@@ -42,12 +38,12 @@ jobs:
           fetch-depth: 0
 
 
-
       - name: save PR data
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
           PR_NUMBER: ${{ env.PR_NUMBER }}
         run: |
+          echo "GITHUB_CONTEXT: $GITHUB_CONTEXT"
           echo "pr_head_ref=$(echo $GITHUB_CONTEXT | jq -r --arg PR_NUMBER "$PR_NUMBER" '.event.workflow_run.pull_requests[] | select(.number == ($PR_NUMBER | tonumber)) | .head.ref')" >> $GITHUB_ENV
           echo "pr_base_ref=$(echo $GITHUB_CONTEXT | jq -r --arg PR_NUMBER "$PR_NUMBER" '.event.workflow_run.pull_requests[] | select(.number == ($PR_NUMBER | tonumber)) | .base.ref')" >> $GITHUB_ENV
 
