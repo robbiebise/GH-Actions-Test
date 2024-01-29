@@ -19,7 +19,7 @@ jobs:
       github.event.workflow_run.conclusion == 'success' &&
       github.event.workflow_run.head_repository.owner.login != github.repository_owner
     steps:
-      - name: Downlod Artifacts 
+      - name: Download Artifacts 
         uses: actions/download-artifact@v4
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -33,7 +33,7 @@ jobs:
         uses: octokit/request-action@v2.x
         id: get_pr_data
         with:
-          route: GET /repos/{full_name}/pulls/{env.PR_NUMBER}
+          route: GET /repos/{full_name}/pulls/${{ env.PR_NUMBER }}
           number: ${{ env.PR_NUMBER }}
           full_name: ${{ github.event.repository.full_name }}
         env:
@@ -72,7 +72,8 @@ jobs:
     runs-on: ubuntu-latest
     if: >
       github.event.workflow_run.event == 'pull_request' &&
-      github.event.workflow_run.conclusion == 'success'
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.head_repository.owner.login == github.repository_owner
     steps:
       - name: Downlod Artifacts 
         uses: actions/download-artifact@v4
