@@ -12,6 +12,62 @@ on:
       - main
 
 jobs:
+  build-forked-pr:
+    runs-on: ubuntu-latest
+    if: >
+      github.event.workflow_run.event == 'pull_request' &&
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.head_repository.owner.login != github.repository_owner
+    steps:
+      - name: Downlod Artifacts 
+        uses: actions/download-artifact@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          run-id: ${{ github.event.workflow_run.id }}
+      - name: Read PR number
+        run: |
+          cat ./pr/NR
+          echo "PR_NUMBER=$(cat ./pr/NR)" >> $GITHUB_ENV
+      - name: Request GitHub API for PR data
+        uses: octokit/request-action@v2.x
+        id: get_pr_data
+        with:
+          route: GET /repos/{full_name}/pulls/{env.PR_NUMBER}
+          number: ${{ env.PR_NUMBER }}
+          full_name: ${{ github.event.repository.full_name }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # checkout the PR
+      - name: Checkout base branch
+        if: github.event.workflow_run.event == 'pull_request'
+        run: |
+          git remote add upstream ${{ github.event.repository.clone_url }}
+          git fetch upstream
+          git checkout -B ${{ fromJson(steps.get_pr_data.outputs.data).base.ref }} upstream/${{ fromJson(steps.get_pr_data.outputs.data).base.ref }}
+          git checkout ${{ github.event.workflow_run.head_branch }}
+          git clean -ffdx && git reset --hard HEAD
+
+      # echo PR data for sonarscan
+      - name: Print PR data
+        run: |
+          echo "PR_NUMBER: ${{ env.PR_NUMBER }}"
+          echo "branch: ${{ github.event.workflow_run.head_branch }}"
+          echo "base: ${{ fromJson(steps.get_pr_data.outputs.data).base.ref }}"
+          echo "revision: ${{ fromJson(steps.get_pr_data.outputs.data).head.sha }}"
+          echo "branch from steps: ${{ fromJson(steps.get_pr_data.outputs.data).head.ref }}"
+      # run sonar scan
+      - name: Sonar Scan
+        uses: sonarsource/sonarqube-scan-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        with:
+          args: >
+            -Dsonar.pullrequest.key=${{ env.PR_NUMBER }}
+            -Dsonar.pullrequest.branch=${{ github.event.workflow_run.head_branch }}
+            -Dsonar.pullrequest.base=${{ fromJson(steps.get_pr_data.outputs.data).base.ref }}
   build-PR:
     runs-on: ubuntu-latest
     if: >
