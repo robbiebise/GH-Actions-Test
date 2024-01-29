@@ -25,6 +25,11 @@ jobs:
           repository: ${{ github.repository }}
           run-id: ${{ github.event.workflow_run.id }}
         
+      # print github context to see what is available
+      - name: print github context
+        run: |
+          echo $GITHUB_CONTEXT
+
       - name: Read PR number
         run: |
           cat ./pr/NR
