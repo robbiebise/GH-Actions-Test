@@ -35,21 +35,16 @@ jobs:
         with:
           ref: refs/pull/${{ env.PR_NUMBER }}/merge
           fetch-depth: 0
-      # dump github context
-      - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
 
 
-      # use env.PR_NUMBER to get the pr out of the event.pull_requests array and save the head and base refs in the github env
+
       - name: save PR data
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
           PR_NUMBER: ${{ env.PR_NUMBER }}
         run: |
-          echo "pr_head_ref=$(echo $GITHUB_CONTEXT | jq -r --arg PR_NUMBER "$PR_NUMBER" '.event.pull_requests[] | select(.number == $PR_NUMBER) | .head.ref')" >> $GITHUB_ENV
-          echo "pr_base_ref=$(echo $GITHUB_CONTEXT | jq -r --arg PR_NUMBER "$PR_NUMBER" '.event.pull_requests[] | select(.number == $PR_NUMBER) | .base.ref')" >> $GITHUB_ENV
+          echo "pr_head_ref=$(echo $GITHUB_CONTEXT | jq -r --arg PR_NUMBER "$PR_NUMBER" '.event.pull_requests[] | select(.number == ($PR_NUMBER | tonumber)) | .head.ref')" >> $GITHUB_ENV
+          echo "pr_base_ref=$(echo $GITHUB_CONTEXT | jq -r --arg PR_NUMBER "$PR_NUMBER" '.event.pull_requests[] | select(.number == ($PR_NUMBER | tonumber)) | .base.ref')" >> $GITHUB_ENV
 
 
       # ensure the PR data was saved in the env by printing it
