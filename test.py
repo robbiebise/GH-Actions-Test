@@ -55,3 +55,19 @@ def login():
     
     # Rest of the login logic
     ...
+
+# an example of a secure connection to a database
+@app.route('/login', methods=['POST'])
+def login():
+    username = request.form['username']
+    password = request.form['password']
+    
+    # Secure: Using parameterized queries
+    conn = sqlite3.connect('database.db')
+    cursor = conn.cursor()
+    query = "SELECT * FROM users WHERE username = ? AND password = ?"
+    cursor.execute(query, (username, password))
+    result = cursor.fetchone()
+    
+    # Rest of the login logic
+    ...
