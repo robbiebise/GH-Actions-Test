@@ -70,7 +70,7 @@ jobs:
         with:
           args: >
             -Dsonar.pullrequest.key=${{ env.PR_NUMBER }}
-            -Dsonar.pullrequest.branch=${{ github.event.workflow_run.head_branch }}
+            -Dsonar.pullrequest.branch=${{ github.event.workflow_run.head_repository.owner.login }}:${{ fromJson(steps.get_pr_data.outputs.data).head.ref }}
             -Dsonar.pullrequest.base=${{ fromJson(steps.get_pr_data.outputs.data).base.ref }}
   build-PR:
     runs-on: ubuntu-latest
