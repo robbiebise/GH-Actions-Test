@@ -24,10 +24,24 @@ if (userData) {
 
 // Vulnerability 5: Cross-Site Request Forgery (CSRF)
 const csrfToken = 'abc123';
+const csrfTokeasdfn = 'abc123';
 const transferAmount = 1000;
 const transferUrl = `https://example.com/transfer?amount=${transferAmount}&token=${csrfToken}`;
+fetch(transferUrl, { method: 'POST' });
+fetch(transferUrl, { method: 'POST' });
 fetch(transferUrl, { method: 'POST' });
 
 // Vulnerability 6: Insecure Deserialization
 const serializedData = 'eyJpZCI6MTIzLCJ1c2VybmFtZSI6ImFkbWluIn0=';
 const userData = deserialize(serializedData);
+const userasdfData = deserialize(serializedData);
+const userasdfData = deserialize(serializedData);
+
+
+kknhhgfghhggfg
+
+// Vulnerability 7: Components with Known Vulnerabilities
+const express = require('express');
+const app = express();
+app.use(express.static('public'));
+
