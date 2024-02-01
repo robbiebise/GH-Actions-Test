@@ -38,3 +38,36 @@ if __name__ == '__main__':
         # Rest of the login logic
         ...
 
+
+#an example of an insecure connection to a database
+@app.route('/login', methods=['POST'])
+def login():
+    username = request.form['username']
+    password = request.form['password']
+    
+    # Insecure: Directly concatenating user input into SQL query
+    # Vulnerable to SQL injection attacks
+    conn = sqlite3.connect('database.db')
+    cursor = conn.cursor()
+    query = "SELECT * FROM users WHERE username = '" + username + "' AND password = '" + password + "'"
+    cursor.execute(query)
+    result = cursor.fetchone()
+    
+    # Rest of the login logic
+    ...
+
+# an example of a secure connection to a database
+@app.route('/login', methods=['POST'])
+def login():
+    username = request.form['username']
+    password = request.form['password']
+    
+    # Secure: Using parameterized queries
+    conn = sqlite3.connect('database.db')
+    cursor = conn.cursor()
+    query = "SELECT * FROM users WHERE username = ? AND password = ?"
+    cursor.execute(query, (username, password))
+    result = cursor.fetchone()
+    
+    # Rest of the login logic
+    ...
