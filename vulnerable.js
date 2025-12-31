@@ -28,6 +28,41 @@ const transferAmount = 1000;
 const transferUrl = `https://example.com/transfer?amount=${transferAmount}&token=${csrfToken}`;
 fetch(transferUrl, { method: 'POST' });
 
+
 // Vulnerability 6: Insecure Deserialization
 const serializedData = 'eyJpZCI6MTIzLCJ1c2VybmFtZSI6ImFkbWluIn0=';
 const userData = deserialize(serializedData);
+
+// Vulnerability 7: XML External Entity (XXE) Injection
+const xmlData = '<!DOCTYPE foo [<!ENTITY xxe SYSTEM "file:///etc/passwd">]><foo>&xxe;</foo>';
+parseXml(xmlData);
+
+// Vulnerability 8: Server-Side Request Forgery (SSRF)
+const url = 'http://example.com/api/data';
+fetch(url);
+
+// Vulnerability 9: Remote Code Execution (RCE)
+const command = 'ls';
+exec(command);
+
+// Vulnerability 10: Insecure Cryptographic Storage
+const password = 'password123';
+const hashedPassword = md5(password
+
+// Vulnerability 11: Security Misconfiguration
+const debugMode = true;
+if (debugMode) {
+    // Display debug information
+}
+
+// Vulnerability 12: Insufficient Logging and Monitoring
+const logFile = 'app.log';
+logToFile(logFile, 'User accessed sensitive data');
+
+// Vulnerability 13: Using Components with Known Vulnerabilities
+const vulnerableLibrary = require('vulnerable-library');
+vulnerableLibrary.doSomething();
+
+// Vulnerability 14: Unvalidated Redirects and Forwards
+const redirectUrl = 'http://example.com';
+res.redirect
